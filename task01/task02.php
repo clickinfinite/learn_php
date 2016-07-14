@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Bob's Auto Parts - Order Results</title>
+  <title>对数组以及字符串的拼接和post以及get的简单了解</title>
 </head>
 <body>
 <p>对数组以及字符串的拼接和post以及get的简单了解</p>

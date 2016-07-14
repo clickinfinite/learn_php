@@ -2,7 +2,7 @@
 <html>
     <head>
     	<meta charset="utf-8">
-        <title>Example</title>
+        <title>php的小任务</title>
     </head>
     <body>
 		<h3>任务</h3>
