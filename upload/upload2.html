@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+	<meta charset="UTF-8">
+	<title>多文件上传</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		body {
+			padding: 50px;
+			font: 16px/1.6 'Microsoft YaHei' arial;
+		}
+	</style>
+</head>
+<body>
+	<form method="post" action="upload5.php" enctype="multipart/form-data">
+		<div>请选择您要上传的文件：
+			<input type="file" name="myfile[]" accept="image/jpeg, iamge/png, image/jpg">
+			<input type="hidden" name="MAX_FILE_SIZE" value="1048576">
+		</div>		
+		<div>请选择您要上传的文件：
+			<input type="file" name="myfile[]" accept="image/jpeg, iamge/png, image/jpg">
+			<input type="hidden" name="MAX_FILE_SIZE" value="1048576">
+		</div>	
+		<input type="submit" value="点击上传">
+	</form>
+</body>
+</html>
