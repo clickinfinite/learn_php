@@ -1,0 +1,40 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+body {
+	padding-top: 40px;
+	font: 16px/1.5 "Microsoft YaHei";
+}
+h2 {
+	text-align: center;
+}
+ul {
+	padding: 20px;
+	list-style: none;
+	text-align: center;
+}
+li {
+	display: inline-block;
+	padding: 4px 8px;
+	color: #fff;
+	background: #3385ff;
+	border-radius: 2px;
+	cursor: pointer;
+}
+li:hover {
+    background: #2f73d8;
+}
+table {
+	width: 100%;
+	border:1px #e5e5e5 solid;
+	border-collapse: collapse;
+}
+tr {
+	border-bottom:1px #e5e5e5 solid;
+}
+table td,table th{
+	padding: 4px 8px;
+	text-align: center;
+}
