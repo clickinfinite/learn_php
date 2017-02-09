@@ -107,6 +107,59 @@ function delFile($filename) {
 }
 
 
+
+/**
+ * [copyFile 文件复制]
+ * @param  [string] $filename [源文件的目录]
+ * @param  [string] $dstname  [目标文件的目录]
+ * @return [string]           [提示信息]
+ */
+function copyFile($filename, $dstname) {
+	// 目标文件是否存在
+	if (file_exists($dstname)) {
+		// 是否存在同名文件
+		if (!file_exists($dstname.'/'.basename($filename))) {
+			if (copy($filename, $dstname.'/'.basename($filename))) {
+				$mes = '文件复制成功';
+			}else{
+				$mes = '文件复制失败';
+			}
+		}else {
+			$mes = '存在同名文件';
+		}
+	}else{
+		$mes = '目标文件不存在';
+	}
+	return $mes;
+}
+
+
+/**
+ * [cutFile 文件剪切]
+ * @param  [string] $filename [源文件的目录]
+ * @param  [string] $dstname  [目标文件的目录]
+ * @return [string]           [提示信息]
+ */
+function cutFile($filename, $dstname) {
+	// 目标文件是否存在
+	if (file_exists($dstname)) {
+		// 是否存在同名文件
+		if (!file_exists($dstname.'/'.basename($filename))) {
+			if (rename($filename, $dstname.'/'.basename($filename))) {
+				$mes = '文件剪切成功';
+			}else{
+				$mes = '文件剪切失败';
+			}
+		}else {
+			$mes = '存在同名文件';
+		}
+	}else{
+		$mes = '目标文件不存在';
+	}
+	return $mes;
+}
+
+
 /**
  * [下载文件]
  * @param  [string] $filename [文件路径]

@@ -81,6 +81,38 @@ DOG;
 	//删除文件的操作
 	$mes = delFile($filename);
 	alertMes($mes, $redirect);
+}elseif ($act == 'copy') {
+	//复制文件
+	$str = <<<DOG
+	<form action="index.php?act=doCopyFile" method="post" class="edit-content">
+		将文件复制到：<input type="text" name="dstname" placeholder="将文件复制到">
+		<input type="hidden" name='path' value="{$path}">
+		<input type="hidden" name='filename' value="{$filename}">
+		<input type="submit" value='确认复制'>
+	</form>
+DOG;
+	echo $str;
+}elseif ($act == 'doCopyFile') {
+	// 复制文件操作
+	$dstname = $_REQUEST['dstname'];
+	$mes = copyFile($filename, $path.'/'.$dstname);
+	alertMes($mes, $redirect);
+}elseif ($act == 'cut') {
+	//剪切文件
+	$str = <<<DOG
+	<form action="index.php?act=doCutFile" method="post" class="edit-content">
+		将文件剪切到：<input type="text" name="dstname" placeholder="将文件剪切到">
+		<input type="hidden" name='path' value="{$path}">
+		<input type="hidden" name='filename' value="{$filename}">
+		<input type="submit" value='确认剪切'>
+	</form>
+DOG;
+	echo $str;
+}elseif ($act == 'doCutFile') {
+	// 剪切文件操作
+	$dstname = $_REQUEST['dstname'];
+	$mes = cutFile($filename, $path.'/'.$dstname);
+	alertMes($mes, $redirect);
 }elseif ($act == 'download') {
 	//完成下载的操作
 	downloadFile($filename);
@@ -156,7 +188,6 @@ echo $str;
 		<li><a href="index.php"></a>主目录</li>
 		<li id="createFile">新建文件</li>
 		<li id="createFolder">新建文件夹</li>
-		<li id="uploadFile">上传文件</li>
 		<?php 
 		// 要判断目录是否为主目录，如果是主目录，则不进行
 		// 跳转，其他情况进行跳转。主目录是file
@@ -213,12 +244,12 @@ echo $str;
 					<?php 
 						} 
 					?>
-					<a href="index.php?act=editcontent&filename=<?php echo $path.'/'.$val; ?>" title="修改">修改</a>
-					<a href="index.php?act=renamefile&filename=<?php echo $path.'/'.$val; ?>" title="重命名">重命名</a>
-					<a href="index.php?act=copy&filename=<?php echo $path.'/'.$val; ?>" title="复制">复制</a>
-					<a href="index.php?act=move&filename=<?php echo $path.'/'.$val; ?>" title="剪切">剪切</a>
+					<a href="index.php?act=editcontent&path=<?php echo $path; ?>&filename=<?php echo $path.'/'.$val; ?>" title="修改">修改</a>
+					<a href="index.php?act=renamefile&path=<?php echo $path; ?>&filename=<?php echo $path.'/'.$val; ?>" title="重命名">重命名</a>
+					<a href="index.php?act=copy&path=<?php echo $path; ?>&filename=<?php echo $path.'/'.$val; ?>" title="复制">复制</a>
+					<a href="index.php?act=cut&path=<?php echo $path; ?>&filename=<?php echo $path.'/'.$val; ?>" title="剪切">剪切</a>
 					<a href="#" onclick="delFile('<?php echo $path.'/'.$val; ?>')" title="删除">删除</a>
-					<a href="index.php?act=download&filename=<?php echo $path.'/'.$val; ?>" title="下载">下载</a>
+					<a href="index.php?act=download&path=<?php echo $path; ?>&filename=<?php echo $path.'/'.$val; ?>" title="下载">下载</a>
 				</td>
 			</tr>
 		 <?php 
