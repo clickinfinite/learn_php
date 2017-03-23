@@ -42,14 +42,14 @@
                     <td>xxx</td>
                     <td>操作</td>
                 </tr>
-                <?php foreach($cat as $c) {?>
+                <?php foreach($catlist as $clist) {?>
                 <tr>
-                    <td><?php echo $c['cat_id'];?></td>
-                    <td><?php echo $c['catname'];?></td>
-                    <td><span class="badge"><?php echo $c['num'];?></span></td>
+                    <td><?php echo $clist['cat_id']?></td>
+                    <td><?php echo $clist['catname']?></td>
+                    <td><span class="badge"><?php echo $clist['num']?></span>
                     <td>
-                        <a href="catdel.php?cat_id=<?php echo $c['cat_id'];?>">删除</a>|
-                        <a href="catedit.php?cat_id=<?php echo $c['cat_id'];?>">编辑</a>
+                        <a href="catdel.php?cat_id=<?php echo $clist['cat_id'];?>">删除</a>
+                        <a href="catedit.php?cat_id=<?php echo $clist['cat_id'];?>">编辑</a>
                     </td>
                 </tr>
                 <?php }?>

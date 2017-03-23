@@ -13,8 +13,8 @@ if (empty($_POST)) {
 	// 不能为空，且去掉前后空格，也不能为空
 	// 当然，在具体的开发过程中，还有其他的验证条件
 	
-	$cat['catname'] = trim($_POST['catname']);
-	if (empty($cat['catname'])) {
+	$catname = trim($_POST['catname']);
+	if (empty($catname)) {
 		exit('栏目名称不能为空');
 	}
 
@@ -34,22 +34,41 @@ if (empty($_POST)) {
 		mysqli_query($conn, 'SET NAMES utf8');
 
 		// 查看是否重复的栏目名
-		$sql = "SELECT COUNT(*) FROM cat WHERE catname = '{$cat['catname']}'";
+		$sql = "SELECT COUNT(*) FROM cat WHERE catname = '{$catname}'";
 		$rs = mysqli_query($conn, $sql);
-		if (mysqli_fetch_row($rs)[0] !=0 ) {
-			echo '栏目名称已经存在，请重新命名';
-			exit();
-		}else{
-			$addSql = "INSERT CAT(catname) VALUES('{$cat['catname']}')";
-			if (!mysqli_query($conn, $addSql)) {
-				echo mysqli_errno();
-			}else{
-				echo '添加成功';
-			}
 
+		/*
+		// mysqli_query returns false if something went wrong with the query
+		if($result === FALSE) { 
+		    yourErrorHandler(mysqli_error($mysqli));
+		}
+		else {
+		    // as of php 5.4 mysqli_result implements Traversable, so you can use it with foreach
+		    foreach( $result as $row ) {
+		        ...		
+		 */
+		if ($rs === false) {
+			echo '出错了';
+		}else{
+			var_dump(mysqli_fetch_row($rs));
+			if (mysqli_fetch_row($rs) != 0 ) {
+				//  mysqli_fetch_row() expects parameter 1 to be 
+				//  mysqli_result, boolean given in 
+				//  这个函数需要一个mysqli_result的参数，你给了Boolean的参数
+				echo '栏目名称已经存在，请重新命名';
+				exit();
+			}else{
+				$addSql = "INSERT CAT(catname) VALUES('{$catname}')";
+				if (!mysqli_query($conn, $addSql)) {
+					echo mysqli_errno();
+				}else{
+					echo '添加成功';
+				}
+			}
 		}
 	}
-
+	// 关闭数据库
+	mysqli_close($conn);
 
 }
 
