@@ -39,8 +39,35 @@ function connectMysql() {
  * @return [mixed]      [返回布尔值/数组]
  */
 function queryMysql($sql) {
-	return mysqli_query(connectMysql(), $sql);
+	$res = mysqli_query(connectMysql(), $sql);
+
+	// 查询失败
+	if ($res === false) {
+		// mysqli_error() 函数返回最近调用函数的最后一个错误描述。
+		mysqlLog($sql."n".mysqli_error(connectMysql()));
+		return $res;
+	}
+
+	// 查询成功
+	mysqlLog($sql);
+	return $res;
+
 }
+
+
+
+/**
+ * [mysqlLog 日志]
+ * @param  [string] $log [记录的信息]
+ * @return [type]      [description]
+ */
+function mysqlLog($str) {
+	// 生成的日志文件的名字
+	$path = ROOT.'/log/'.date('Ymd', time()).'.txt';
+	$log = "------------------------------------------------------\n".date('Y/m/d H:i:s', time())."\n".$str."\n"."------------------------------------------------------\n";
+	file_put_contents($path, $log, FILE_APPEND);
+}
+
 
 
 
@@ -84,7 +111,7 @@ function getRowData($sql) {
 /**
  * [getOneData 查询select语句并返回一个单元]
  * @param  [string] $sql [查询的select语句]
- * @return [mixed/string]      [查询到的话返回一维数组，没有查到返回false]
+ * @return [mixed/string]      [查询到的话返回一位数组中第一个值，没有查到返回false]
  */
 function getOneData($sql) {
 	$result = queryMysql($sql);
@@ -129,7 +156,7 @@ function execMysql($table, $data, $act='INSERT', $where='0') {
 	if ($act == 'INSERT') {
 		$sql = "INSERT $table(";
 		$sql .= implode(',', array_keys($data)).") VALUES ('";
-		$sql .= implode(',', array_values($data))."')";
+		$sql .= implode("','", array_values($data))."')";
 		return queryMysql($sql);
 	}else if($act == 'UPDATE') {
 		$sql = "UPDATE $table SET ";
@@ -165,19 +192,6 @@ function getLastId() {
 	// 假设 websites 表有一个自动生成的 ID 字段。返回最后一次查询中的 ID：
 	return mysqli_insert_id();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

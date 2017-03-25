@@ -44,30 +44,19 @@
                     <td>回复</td>
                     <td>状态</td>
                 </tr>
+                <?php foreach($art as $artitem) {?>
                 <tr>
-                    <td>1</td>
-                    <td>2013/12/03</td>
-                    <td><a href="#">这是2013年的第一场雪</a></td>
-                    <td>心情随笔</td>
+                    <td><?php echo $artitem['art_id']?></td>
+                    <td><?php echo date('Y/m/d', $artitem['pubtime'])?></td>
+                    <td><a href="#"><?php echo $artitem['title']?></a></td>
+                    <td><?php echo $artitem['catname']?></td>
                     <td><span class="badge">12</span></td>
-                    <td>已发布</td>
+                    <td>
+                        <a href="artedit.php?art_id=<?php echo $artitem['art_id'];?>" >编辑</a>
+                        <a href="artdel.php?art_id=<?php echo $artitem['art_id'];?>" >删除</a>
+                    </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2013/12/03</td>
-                    <td><a href="#">这是2013年的第一场雪</a></td>
-                    <td>心情随笔</td>
-                    <td><span class="badge">15</span></td>
-                    <td>已发布</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>2013/12/03</td>
-                    <td><a href="#">这是2013年的第一场雪</a></td>
-                    <td>心情随笔</td>
-                    <td><span class="badge">9</span></td>
-                    <td>已发布</td>
-                </tr>
+                <?php }?>
             </table>
             <div id="pagebar">
                 Pages:&nbsp;
