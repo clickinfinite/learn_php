@@ -22,69 +22,21 @@
     </nav>
     <div id="main">
         <div id="lside">
+        <?php foreach($artRes as $artitem) {?>
             <article>
-                <h2><a href="#">午后的街头</a></h2>
+                <h2><a href="art.php?art_id=<?php echo $artitem['art_id']?>"><?php echo $artitem['title']?></a></h2>
                 <div class="entry_header">
-                    <time>2015/7月/日</time>
+                    <time><?php echo date('Y/m/d', $artitem['pubtime'])?></time>
                     by
                     <a href="#">十八</a>
-                    <a class="catlink" href="#">闲谈随笔</a>
-                    <a class="comment" href="#">8条评论</a>
+                    <a class="catlink" href="#"><?php echo $artitem['catname']?></a>
+                    <a class="comment" href="#"><?php echo $artitem['comm']?></a>
                 </div>
                 <div class="entry_content">
-                    <p>有时突然想说我爱你，<br>
-                    有时突然慌张忧伤。</p>
-                    <p>
-                    像迷路的孩子，<br>
-                    东张西望。
-                    </p>
-                    <p>
-                    伸出双手想抓住，时光像泥鳅一样。
-                    </p>
+                   <?php echo $artitem['content']?>
                 </div>
             </article>
-            <article>
-                <h2><a href="#">午后的街头</a></h2>
-                <div class="entry_header">
-                    <time>2015/7月/日</time>
-                    by
-                    <a href="#">十八</a>
-                    <a class="catlink" href="#">闲谈随笔</a>
-                    <a class="comment" href="#">8条评论</a>
-                </div>
-                <div class="entry_content">
-                    <p>有时突然想说我爱你，<br>
-                    有时突然慌张忧伤。</p>
-                    <p>
-                    像迷路的孩子，<br>
-                    东张西望。
-                    </p>
-                    <p>
-                    伸出双手想抓住，时光像泥鳅一样。
-                    </p>
-                </div>
-            </article>
-            <article>
-                <h2><a href="#">午后的街头</a></h2>
-                <div class="entry_header">
-                    <time>2015/7月/日</time>
-                    by
-                    <a href="#">十八</a>
-                    <a class="catlink" href="#">闲谈随笔</a>
-                    <a class="comment" href="#">8条评论</a>
-                </div>
-                <div class="entry_content">
-                    <p>有时突然想说我爱你，<br>
-                    有时突然慌张忧伤。</p>
-                    <p>
-                    像迷路的孩子，<br>
-                    东张西望。
-                    </p>
-                    <p>
-                    伸出双手想抓住，时光像泥鳅一样。
-                    </p>
-                </div>
-            </article>
+        <?php }?>
             <div id="pagebar">
                 Pages:&nbsp;
                 <a href="#">1</a>
@@ -104,10 +56,9 @@
             <aside>
                 <h4>测试标题</h4>
                 <ul>
-                    <li><a href="">文章标题</a>&nbsp;(1)</li>
-                    <li><a href="">文章标题</a>&nbsp;(3)</li>
-                    <li><a href="">文章标题</a>&nbsp;(5)</li>
-                    <li><a href="">文章标题</a>&nbsp;(3)</li>
+                    <?php foreach($catRes as $catitem) {?>
+                    <li><a href="index.php?cat_id=<?php echo $catitem['cat_id']?>"><?php echo $catitem['catname']?></a></li>
+                    <?php }?>
                 </ul>
             </aside>
             <aside>

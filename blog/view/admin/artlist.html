@@ -50,7 +50,7 @@
                     <td><?php echo date('Y/m/d', $artitem['pubtime'])?></td>
                     <td><a href="#"><?php echo $artitem['title']?></a></td>
                     <td><?php echo $artitem['catname']?></td>
-                    <td><span class="badge">12</span></td>
+                    <td><span class="badge"><?php echo $artitem['comm']?></span></td>
                     <td>
                         <a href="artedit.php?art_id=<?php echo $artitem['art_id'];?>" >编辑</a>
                         <a href="artdel.php?art_id=<?php echo $artitem['art_id'];?>" >删除</a>

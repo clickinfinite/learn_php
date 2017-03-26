@@ -28,6 +28,7 @@ if (!is_numeric($artId)) {
 // 判断传递过来的art_id,是否存在于数据库中。
 $artSearchSql = "SELECT * FROM art WHERE art_id = ".$artId;
 $artSearchRes = getRowData($artSearchSql);
+
 if (!$artSearchRes) {
 	error('文章不存在');
 	exit();
@@ -79,7 +80,35 @@ if (empty($_POST)) {
 	if (!$artInsertRes) {
 		error('文章编辑失败');
 	}else{
-		success('文章编辑成功');
+		//判断有无tag,没有则文章修改成功，
+		//有的话直接删除原来的标签，再插入新的标签
+		$tag = trim($_POST['tag']);
+		// 删除所有tag表的所有tag,再INSERT插入新的tag
+		// 因为使用update一个一个太麻烦，还是不如全部删除
+		// 再重新插入
+		// 
+		
+		if (empty($tag)) {
+			success('文章修改成功');
+		}else{
+			// 删除tag
+		 	$tagDelSql = "DELETE * FROM tag WHERE art_id = $artId";
+		 	queryMysql($tagDelSql);
+
+		 	// 重新添加tag
+		 	$tagSql = "INSERT tag(art_id, tag) VALUES";
+		 	$tag = explode(',', $tag);
+
+		 	foreach ($tag as $tagitem) {
+		 		$tagSql .= "(".$artId.",'".$tagitem."'),";
+		 	}
+		 	$tagSql = rtrim($tagSql, ",");
+
+		 	if (queryMysql($tagSql)) {
+		 		success('文章修改成功');
+		 	}
+
+		}
 	}
 }
 

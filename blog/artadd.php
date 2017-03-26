@@ -55,12 +55,70 @@ if (empty($_POST)) {
 
 	$art['pubtime'] = time();
 
+	// 收集tag----这个是一个冗余字段
+	// 但是为了查询更加方便，sql执行更快，可以添加
+	$art['arttag'] = trim($_POST['tag']);
+
 	//如果都满足条件，这可以提交到后台，并写入数据库中
 	$artInsertRes = execMysql('art', $art);
 	if (!$artInsertRes) {
+		// 文章添加成功，将cat表即当前栏目下的文章数加+1;
+		$catNumSql = "UPDATE cat SET num = num - 1 WHERE cat_id =".$art['cat_id'];
+		queryMysql($catNumSql);
 		error('文章发表失败');
 	}else{
-		success('文章发表成功');
+		// 判断是否有tag
+		$art['tag'] = trim($_POST['tag']);
+		// 没有tag,直接提示文章添加成功
+		if ($art['tag'] == '') {
+			// 文章添加成功，将cat表即当前栏目下的文章数加+1;
+			$catNumSql = "UPDATE cat SET num = num + 1 WHERE cat_id =".$art['cat_id'];
+			queryMysql($catNumSql);
+
+			success('文章添加成功');
+		}else{
+			// 获取上一次insert操作产生的主键id
+			$art_id = getLastId();
+			// 插入tag 到tag表中
+			/*
+			INSERT tag(art_id, tag) VALUES($art_id, 'php'), 
+			($art_id, 'javasript'),
+			($art_id, 'css');
+			同一文章，关联着多个标签。这个需要自己拼接sql,
+			刚才我们封装的那个函数execMysql,这个是插入一行才能用
+			 */
+			$tagSql = "INSERT tag(art_id, tag) VALUES";
+			// 我们假定tag的添加时通过,来进行分割的，所以，在post过来时，我们
+			// 我们通过，进行分割，把其中内容分别插入数据库中
+			$tag = explode(',', $art['tag']);
+
+			foreach ($tag as $tagitem) {
+				$tagSql .= "(".$art_id.",'".$tagitem."'),";
+			}
+			$tagSql = rtrim($tagSql, ",");
+
+			// 执行sql
+			if (queryMysql($tagSql)) {
+				// 文章添加成功，将cat表即当前栏目下的文章数加+1;
+				$catNumSql = "UPDATE cat SET num = num + 1 WHERE cat_id =".$art['cat_id'];
+				queryMysql($catNumSql);
+				success('文章添加成功');
+			}else{
+				// tag 添加失败,那么就把文章删掉，
+				// 因为一个文章要添加成功，那么标签也要成功
+				$tagDelSql = "DELETE FROM art WHERE art_id = $art_id";
+				// 删除文章成功
+				if (queryMysql($tagDelSql)) {
+					// 文章添加成功，将cat表即当前栏目下的文章数加+1;
+					$catNumSql = "UPDATE cat SET num = num - 1 WHERE cat_id =".$art['cat_id'];
+					queryMysql($catNumSql);
+					// 文章添加失败
+					error('文章添加失败');
+				}
+			}
+
+		}
+		
 	}
 
 

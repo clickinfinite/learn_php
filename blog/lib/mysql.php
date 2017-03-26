@@ -190,7 +190,7 @@ function execMysql($table, $data, $act='INSERT', $where='0') {
  */
 function getLastId() {
 	// 假设 websites 表有一个自动生成的 ID 字段。返回最后一次查询中的 ID：
-	return mysqli_insert_id();
+	return mysqli_insert_id(connectMysql());
 }
 
 
