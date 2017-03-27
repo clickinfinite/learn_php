@@ -33,7 +33,7 @@ if (!getRowData($artSql)) {
 }
 
 // 查到文章的具体内容
-$artDetailSql = "SELECT title, catname, comm, pubtime, content FROM cat INNER JOIN art ON cat.cat_id = art.cat_id WHERE art_id = $artId";
+$artDetailSql = "SELECT title, catname, comm, pubtime, content, pic FROM cat INNER JOIN art ON cat.cat_id = art.cat_id WHERE art_id = $artId";
 $artDetailRes = getRowData($artDetailSql);
 
 

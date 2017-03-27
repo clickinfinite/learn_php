@@ -53,6 +53,18 @@ if (empty($_POST)) {
 		exit();
 	}
 
+	// 图片上传
+	if (!($_FILES['pic']['name'] == ' ') && $_FILES['pic']['error'] == 0) {
+		// 图片上传不为空，且上传成功的话
+		$des = createDir().''.randStr().getEex($_FILES['pic']['name']);
+		if (move_uploaded_file($_FILES['pic']['tmp_name'], ROOT.$des)) {
+			// 如果移动成功,在数据库中添加该pic的字段
+			$art['pic'] = $des;
+			// 字段保存的是相对路径，因为在linux等等系统没有c,e等等
+			// 所以在数据库存的是相对路径
+		}
+	}
+
 	$art['pubtime'] = time();
 	// 收集tag----这个是一个冗余字段
 	// 但是为了查询更加方便，sql执行更快，可以添加

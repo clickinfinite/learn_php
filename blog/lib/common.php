@@ -112,4 +112,86 @@ function getpagination($totalArticleNum, $pageArticleNum, $curPage) {
 
 }
 
+
+/**
+ * [createDir 创建文件上传目录]
+ * @return [type] [description]
+ */
+function createDir() {
+	// 创建一个联级的目录
+	// 例如：upload/2017/03/04
+	$path = '/upload'.date('Y/m/d');
+
+	$abs = ROOT.$path;
+	// true参数代表创建联级目录
+	if (is_dir($abs) || mkdir($abs, 0777, true)) {
+		return $path;
+	}else{
+		return false;
+	}
+
+}
+
+
+
+/**
+ * [randStr 生产随机字符串]
+ * @param  integer $length [生成的随机字符串的位数]
+ * @return [string]          [生产的随机字符串]
+ */
+function randStr($length=6) {
+	// 把字符串打乱
+	$str = str_shuffle('ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghjkmnopkuvwxyz');
+	$str = substr($str, 0, $length);
+	return $str;
+
+}
+
+
+/**
+ * [getExe 获取文件的后缀名]
+ * @param  [string] $name [文件的路径]
+ * @return [strng]       [文件的后缀名]
+ */
+function getExe($name) {
+	return strrchr($name, '.');
+
+	/*
+	
+	获取文件名的常用的五种方法
+	$path_parts = pathinfo('/www/htdocs/inc/lib.inc.php');
+
+	echo $path_parts['dirname'], "\n";
+	echo $path_parts['basename'], "\n";
+	echo $path_parts['extension'], "\n";
+	echo $path_parts['filename'], "\n";
+
+	/www/htdocs/inc
+	lib.inc.php
+	php
+	lib.inc
+	 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>

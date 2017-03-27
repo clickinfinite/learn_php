@@ -33,7 +33,10 @@
                     <a class="comment" href="#"><?php echo $artDetailRes['comm']?></a>
                 </div>
                 <div class="entry_content">
-                   <?php echo $artDetailRes['content']?>
+                    <?php if($artDetailRes['pic']) {?>
+                        <img src="<?php echo $artDetailRes['pic'];?>" alt="文章内容图片">
+                    <?php }?>
+                   <?php echo $artDetailRes['content'];?>
                 </div>
             </article>
             
