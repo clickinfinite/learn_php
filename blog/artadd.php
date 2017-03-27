@@ -54,7 +54,6 @@ if (empty($_POST)) {
 	}
 
 	$art['pubtime'] = time();
-
 	// 收集tag----这个是一个冗余字段
 	// 但是为了查询更加方便，sql执行更快，可以添加
 	$art['arttag'] = trim($_POST['tag']);
@@ -74,7 +73,6 @@ if (empty($_POST)) {
 			// 文章添加成功，将cat表即当前栏目下的文章数加+1;
 			$catNumSql = "UPDATE cat SET num = num + 1 WHERE cat_id =".$art['cat_id'];
 			queryMysql($catNumSql);
-
 			success('文章添加成功');
 		}else{
 			// 获取上一次insert操作产生的主键id

@@ -39,12 +39,12 @@
         <?php }?>
             <div id="pagebar">
                 Pages:&nbsp;
-                <a href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                4
-                <a href="#">5</a>
-                <a href="#">6</a>
+                <?php foreach($page as $k=>$v) {?>
+                <?php if($k == $curPage) {?>
+                <span><?php echo $k;}else{?></span>
+                <a href="index.php?<?php echo $v?>"><?php echo $k?></a>
+                <?php }?>
+                <?php }?>
             </div>
         </div>
         <div id="rside">

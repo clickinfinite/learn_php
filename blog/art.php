@@ -72,7 +72,8 @@ if (!empty($_POST)) {
 	}
 	$comm['pubtime'] = time();
 	$comm['art_id'] = $artId;
-
+	// 来访者的ip
+	$comm['ip'] = sprintf("%u", ip2long(getUserIp()));
 	$comRes = execMysql('comment', $comm);
 	if ($comRes) {
 		// 评论提交成功后，那么art表中num+1;
