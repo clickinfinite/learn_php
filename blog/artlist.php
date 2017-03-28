@@ -19,6 +19,11 @@ $artListSql = "SELECT art.*, cat.catname FROM art LEFT JOIN cat ON art.cat_id = 
 // 把查询到的信息保存的二维数组，保存到$art变量
 $art = getAllData($artListSql);
 
+if (!acc()) {
+	// 如果没有登陆页面，跳转到登陆页面
+	header('Location:login.php');
+	exit();
+}
 require(ROOT.'/view/admin/artlist.html');	
 
  ?>

@@ -194,5 +194,31 @@ function getLastId() {
 }
 
 
+/**
+ * [_addslashes 转义字符串,预防sql的注入]
+ * @param  [array] $arr [post,get,cookie中的数组进行转义]
+ * @return [array]      [转义后的数组]
+ */
+function _addslashes($arr) {
+	foreach ($arr as $key => $value) {
+		if (is_string($value)) {
+			$arr[$key] = addcslashes($key);
+		}else if(is_array($v)) {
+			$arr[$key] = _addslashes($value); 
+		}
+	}
+
+	return $arr;
+
+	/*
+		$str = addcslashes("A001 A002 A003","A");
+		echo($str);
+		\A001 \A002 \A003-----第二个参数要对那个字符进行转义
+		不写第二个参数的话，会对\0, \r, \n, \t, \f 以及 \v 是预定义的转义序列。以及' "都会转义
+	 */
+}
+
+
+
 
 ?>

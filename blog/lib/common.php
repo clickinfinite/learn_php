@@ -251,4 +251,18 @@ function makeThumb($oimg, $sw=200, $sh=200) {
 
 	return $path;
 }
+
+
+/**
+ * [acc 检测是否登陆]
+ * @return [Boolean] [是否登陆]
+ */
+function acc() {
+	return isset($_COOKIE['name']);
+}
+
+
+
+
+
 ?>
