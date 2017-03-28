@@ -10,7 +10,7 @@ if (empty($_POST)) {
 }else {
 	$name = trim($_POST['name']);
 	$password = trim($_POST['password']);
-	$sql = "SELECT * FROM user WHERE name= '" . $name . "'";
+	$sql = "SELECT * FROM user WHERE name= ".$name;
 	$user = getRowData($sql);
 
 	// 判断用户名或密码是否正确
@@ -24,7 +24,10 @@ if (empty($_POST)) {
 
 	// 都通过的话,设置cookie
 	}else{
+		// 名字的cookie
 		setcookie('name', $user['name']);
+		// 加密后的cookie
+		setcookie('name', cCode[$user['name']]);
 		header('Location:artlist.php');
 	}
 }

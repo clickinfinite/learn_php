@@ -253,12 +253,29 @@ function makeThumb($oimg, $sw=200, $sh=200) {
 }
 
 
+
+/**
+ * [cCode 加密后的用户名]
+ * @param  [string] $name [用户名]
+ * @return [string]       [返回加密后的字符串]
+ */
+function cCode($name) {
+	$cfg = include(ROOT.'lib/config.php');
+	$salt = $cfg['salt'];
+	return md5($salt. '|'.$name);
+}
+
 /**
  * [acc 检测是否登陆]
  * @return [Boolean] [是否登陆]
  */
 function acc() {
-	return isset($_COOKIE['name']);
+	// 如果两个cookie有一个不存在，则返回false
+	if (!isset($_COOKIE['name']) || !isset($_COOKIE['cCode'])) {
+		return false;
+	}
+	// 设置一个加密后的cookie
+	return $_COOKIE['cCode'] === cCode($_COOKIE['name']);
 }
 
 

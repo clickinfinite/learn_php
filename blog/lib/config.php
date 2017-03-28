@@ -9,8 +9,8 @@ return array(
 'username'=> 'root',
 'password' => 'ann0707',
 'db' => 'blog',
-'charset' => 'utf8'
-
+'charset' => 'utf8',
+'salt' =>'L&7SD".af]'
 );
 
 ?>

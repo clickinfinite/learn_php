@@ -47,10 +47,6 @@ $artSql = "SELECT art_id, title, catname, comm, pubtime, content, thumb FROM cat
 $artRes = getAllData($artSql);
 
 
-
-
-
-
 // 加载首页
 include(ROOT.'/view/front/index.html');
  ?>

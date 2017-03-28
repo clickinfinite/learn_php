@@ -37,8 +37,8 @@ require(ROOT.'/lib/mysql.php');
 require(ROOT.'/lib/common.php');
 
 
-$_GET = __addslashes($_GET);
-$_POST = __addslashes($_POST);
-$_COOKIE = __addslashes($_COOKIE);
+$_GET = _addslashes($_GET);
+$_POST = _addslashes($_POST);
+$_COOKIE = _addslashes($_COOKIE);
 
 ?>
