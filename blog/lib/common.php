@@ -120,7 +120,7 @@ function getpagination($totalArticleNum, $pageArticleNum, $curPage) {
 function createDir() {
 	// 创建一个联级的目录
 	// 例如：upload/2017/03/04
-	$path = '/upload'.date('Y/m/d');
+	$path = '/upload/'.date('Y/m/d');
 
 	$abs = ROOT.$path;
 	// true参数代表创建联级目录
@@ -175,23 +175,80 @@ function getExe($name) {
 
 
 
+/**
+ * [makeThumb 创建缩略图]
+ * @param  [string]  $oimg [原图的相对路径]
+ * @param  integer $sw   [缩略图的宽]
+ * @param  integer $sh   [缩略图的高]
+ * @return [string]        [缩略图相对路径]
+ */
+function makeThumb($oimg, $sw=200, $sh=200) {
+	// 缩略图存放的地址
+	$path = dirname($oimg).'/'.randStr().'.png';
+
+	// 获取绝对路径是为了取出图片，相对路径是为了存储到数据库中
+	//获取大图的绝对路径
+	$opath = ROOT.$oimg;
+
+	// 获取小图的绝对路径
+	$spath = ROOT.$path;
+
+	// 获取原始大图的宽高以及图片类型的信息
+	//如果获取不到，那么直接退出,不然把图片
+	//的信息获取出来
+	if (!list($bw, $bh, $btype) = getimagesize($opath)) {
+		return false;
+	}
 
 
+	// 我们并不知到用户上传的图片的类型，
+	// 此时我们需要获取用户的图片类型，调用相应的函数
+	
+	/*
+	索引 2 给出的是图像的类型，返回的是数字，其中1 = GIF，2 = JPG，3 = PNG，4 = SWF，5 = PSD，6 = BMP，7 = TIFF(intel byte order)，8 = TIFF(motorola byte order)，9 = JPC，10 = JP2，11 = JPX，12 = JB2，13 = SWC，14 = IFF，15 = WBMP，16 = XBM
+	 */
+
+	$map = array(
+		1 => 'imagecreatefromgif',
+		2 => 'imagecreatefromjpeg',
+		3 => 'imagecreatefrompng',
+		6 => 'imagecreatefrombmp',
+		15 => 'imagecreatefromwbmp',
+	);
 
 
+	// 如果传过来的图片，不是在map的数组里，
+	// 我们则无法进行处理，则直接退出该函数
+	if (!isset($map[$btype])) {
+		return false;
+	}
+
+	//创建原图的画布
+	$big = $map[$btype]($opath);
+
+	// 创建小图的画布,并且填充白色
+	$small = imagecreatetruecolor($sw, $sh);
+	$white = imagecolorallocate($small, 255, 255, 255);
+	imagefill($small, 0, 0, $white);
 
 
+	// 计算大图到小图进行缩放的比例
+	// 从小图宽/大图宽, 小图高/大图高,这些比例取出一个较小的
+	// 比例，这样不至于把图片拉变形 
+	$rate = min($sw/$bw, $sh/$bh);
+	$rw = $bw*$rate;
+	$rh = $bh*$rate;
 
+	// 把大图缩放copy到小图的画布上
+	imagecopyresampled($small, $big, ($sw-$rw)/2, ($sh-$rh)/2, 0, 0, $rw, $rh, $bw, $bh);
 
+	// 保存缩略图
+	imagepng($small, $spath);
 
+	// 销毁画布
+	imagedestroy($big);
+	imagedestroy($small);
 
-
-
-
-
-
-
-
-
-
+	return $path;
+}
 ?>

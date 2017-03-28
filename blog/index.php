@@ -41,7 +41,7 @@ $catRes = getAllData($catSql);
 
 
 // 取出文章相关的数据,根据分页通过limit来限制取的数目
-$artSql = "SELECT art_id, title, catname, comm, pubtime, content FROM cat INNER JOIN art ON cat.cat_id = art.cat_id WHERE 1 ".$where." ORDER BY art_id DESC LIMIT ".($curPage-1)*$articleNum.",".$articleNum;
+$artSql = "SELECT art_id, title, catname, comm, pubtime, content, thumb FROM cat INNER JOIN art ON cat.cat_id = art.cat_id WHERE 1 ".$where." ORDER BY art_id DESC LIMIT ".($curPage-1)*$articleNum.",".$articleNum;
 // 跳过(当前页-1)*每一页的条数，取出每一页显示的条数
 
 $artRes = getAllData($artSql);

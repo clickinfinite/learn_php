@@ -34,6 +34,8 @@
                 </div>
                 <div class="entry_content">
                     <?php if($artDetailRes['pic']) {?>
+                    <!-- 在数据库中存的是相对路径，所以要从根目录下打开
+                    不然，会报错提示路径错误 -->
                         <img src="<?php echo $artDetailRes['pic'];?>" alt="文章内容图片">
                     <?php }?>
                    <?php echo $artDetailRes['content'];?>

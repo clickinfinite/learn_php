@@ -33,6 +33,11 @@
                     <a class="comment" href="#"><?php echo $artitem['comm']?></a>
                 </div>
                 <div class="entry_content">
+                    <?php if($artitem['thumb']) {?>
+                    <!-- 在数据库中存的是相对路径，所以要从根目录下打开
+                    不然，会报错提示路径错误 -->
+                        <img src="<?php echo $artitem['thumb'];?>" alt="文章内容缩略图">
+                    <?php }?>
                    <?php echo $artitem['content']?>
                 </div>
             </article>
