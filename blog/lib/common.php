@@ -260,9 +260,9 @@ function makeThumb($oimg, $sw=200, $sh=200) {
  * @return [string]       [返回加密后的字符串]
  */
 function cCode($name) {
-	$cfg = include(ROOT.'lib/config.php');
+	$cfg = include(ROOT.'/lib/config.php');
 	$salt = $cfg['salt'];
-	return md5($salt. '|'.$name);
+	return md5($salt.'|'.$name);
 }
 
 /**

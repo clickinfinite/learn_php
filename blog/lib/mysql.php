@@ -202,7 +202,7 @@ function getLastId() {
 function _addslashes($arr) {
 	foreach ($arr as $key => $value) {
 		if (is_string($value)) {
-			$arr[$key] = addslashes($key);
+			$arr[$key] = addslashes($value);
 		}else if(is_array($v)) {
 			$arr[$key] = _addslashes($value); 
 		}

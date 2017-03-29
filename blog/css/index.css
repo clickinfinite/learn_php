@@ -200,3 +200,7 @@
     #pagebar a:hover {
         color: black;
     }
+    .entry_content img {
+        width: 100%;
+        height: auto;
+    }
